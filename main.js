@@ -129,6 +129,24 @@ class LinkedList {
         }
     }
 
+    searchByValue(value) {
+        if ( this.isEmpty() ) { 
+            console.log('the list is empty')
+        } else {
+            let counter = 0;
+            let prev = this.head;
+            while(prev.next !== null && prev.value !== value) {
+                counter++;
+                prev = prev.next;
+            }
+            if ( prev.value === value ){
+                console.log('element ', value ,' is found in index ', counter)
+            } else {
+                console.log('element ', value ,' is not found')
+            }
+        }
+    }
+
     print() {
         let result = []
         if (this.isEmpty()) {
@@ -155,45 +173,10 @@ list.insert(4, 3);
 console.log(list.getSize())
 console.log(list.print())
 
-console.log('')
-console.log('$$$$$$$')
-console.log('')
-
-list.removeByValue(2)
-console.log(list.getSize())
-console.log(list.print())
-
-console.log('')
-console.log('$$$$$$$')
-console.log('')
-
-list.removeByValue(4)
-console.log(list.getSize())
-console.log(list.print())
-
-console.log('')
-console.log('$$$$$$$')
-console.log('')
-
-list.removeByValue(22)
-console.log(list.getSize())
-console.log(list.print())
-
-console.log('')
-console.log('$$$$$$$')
-console.log('')
-
-list.removeByValue(1)
-console.log(list.getSize())
-console.log(list.print())
-
-console.log('')
-console.log('$$$$$$$')
-console.log('')
-
-list.removeByValue(3)
-console.log(list.getSize())
-console.log(list.print())
+list.searchByValue(1)
+list.searchByValue(3)
+list.searchByValue(2)
+list.searchByValue(11)
 
 
 
