@@ -9,7 +9,8 @@ class Node {
 class LinkedList {
     // list containng (head pointed to -> all nodes till reaching to -> null)
     constructor() {
-        this.head = null;
+        this.head = null; // the first of the list;
+        this.tail = null; // the last of the list
         this.size = 0;
     }
 
@@ -26,6 +27,7 @@ class LinkedList {
         const node = new Node(value);
         if (this.isEmpty()) {
             this.head = node;
+            this.tail = node;
             node.next = null
         } else{
             node.next = this.head;
@@ -47,10 +49,39 @@ class LinkedList {
                 curr = curr.next
             };
             curr.next = node;
-            node.next = null
+            this.tail = curr.next;
+            node.next = null;
         }
         this.size++
         // console.log({...this.head})
+    }
+
+    removeFromFront() {
+        // remove the first node in the list
+        if ( this.isEmpty() ) {
+            console.log('list is empty for removing from the front')
+        } else {
+            this.head = this.head.next;
+            this.size--
+        }
+
+    }
+
+    removeFromEnd() {
+        // remove the last node in the list 
+        if ( this.isEmpty() ) {
+            console.log('list is empty for removing from the last')
+        } else {
+            let prev = null
+            let removedNode = this.head;
+            while(removedNode.next !== null) {
+                prev = removedNode
+                removedNode = removedNode.next;
+            }
+            this.tail = prev
+            prev.next = null;
+            this.size--
+        }
     }
 
     insert(value, index) {
@@ -71,6 +102,9 @@ class LinkedList {
                 currentNode.next = node;
                 node.next = nextNode;
                 this.size++
+                if ( index === this.size - 1) {
+                    this.tail = node
+                }
                 // console.log({counter, currentNode, nextNode})
             }
         }
@@ -93,6 +127,9 @@ class LinkedList {
                 while( counter !== (index - 1) ) {
                     counter++;
                     prev = prev.next
+                }
+                if ( index === this.size - 1) {
+                    this.tail = prev
                 }
                 removedNode = prev.next;
                 prev.next = removedNode.next
@@ -119,6 +156,7 @@ class LinkedList {
                 }
                 if( prev.next !== null ) {
                     console.log('element is found to remove :) ', prev.next.value)
+                    this.tail = prev
                     let removedNode = prev.next;
                     prev.next = removedNode.next;
                     this.size--
@@ -162,21 +200,39 @@ class LinkedList {
             return result
         }
     }
+
+    reverse() {
+        if (this.isEmpty()) {
+            console.log('your list is empty to reverse! ...');
+        } else {
+            let prev = null;
+            let curr = this.head;
+            
+            while (curr !== null) {
+                let next = curr.next;
+                curr.next = prev;
+                prev = curr 
+                curr = next
+            }
+            this.head = prev
+            return this.head
+        }
+    }
 }
 
-const list = new LinkedList();
+// const list = new LinkedList();
 
-list.insert(1, 0);
-list.insert(2, 1);
-list.insert(3, 2);
-list.insert(4, 3);
-console.log(list.getSize())
-console.log(list.print())
-
-list.searchByValue(1)
-list.searchByValue(3)
-list.searchByValue(2)
-list.searchByValue(11)
+// list.append(1);
+// list.append(2);
+// list.append(3);
+// list.append(4);
+// list.prepend(0)
 
 
+// console.log(list.getSize(), ' ', list.print())
+// list.removeFromFront()
+// list.removeFromEnd()
+// console.log(list.getSize(), ' ', list.print())
+// console.log(list)
 
+module.exports = LinkedList;
